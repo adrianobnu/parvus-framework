@@ -5,6 +5,9 @@
 
     namespace Parvus;
 
+    ini_set('display_errors',0);
+    error_reporting(0);
+
     use Illuminate\Container\Container;
     use Illuminate\Events\Dispatcher;
     use Symfony\Component\HttpFoundation\Request;
@@ -20,12 +23,7 @@
             $this->request = Request::createFromGlobals();
 
             /** Defines the base URL **/
-            $url = (strpos($_SERVER['SERVER_PROTOCOL'], 'HTTPS') !== false ? 'https://' : 'http://').$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']);
-
-            define (url,$url.(substr($url,-1) == '/' ? NULL : '/'));
-
-            /** Define the base path **/
-            define (path,__DIR__.'/../');
+            define ('url',$this->request->getUri());
 
             /** Include the app constant */
             include_once (path.'app/config/Constant.php');
