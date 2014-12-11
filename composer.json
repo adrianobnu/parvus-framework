@@ -1,0 +1,23 @@
+{
+    "name": "adrianobnu/parvus-framework",
+    "description": "Parvus framework - A small but strong framework",
+    "keywords": ["php", "framework", "mvc"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php" : ">=5.3",
+        "philo/laravel-blade": "2.*",
+        "illuminate/database": "*",
+        "phpmailer/phpmailer": "*",
+        "symfony/http-foundation" : "2.5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Parvus\\" : ""
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "stable"
+}
