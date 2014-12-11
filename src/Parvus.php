@@ -5,8 +5,8 @@
 
     namespace Parvus;
 
-    use Illuminate\Events\Dispatcher;
     use Illuminate\Container\Container;
+    use Illuminate\Events\Dispatcher;
     use Symfony\Component\HttpFoundation\Request;
 
     class Parvus
@@ -17,7 +17,7 @@
 
         public final function __construct()
         {
-            $this->request = \Request::createFromGlobals();
+            $this->request = Request::createFromGlobals();
 
             /** Defines the base URL **/
             $url = (strpos($_SERVER['SERVER_PROTOCOL'], 'HTTPS') !== false ? 'https://' : 'http://').$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']);
@@ -96,7 +96,7 @@
             /** Connection */
             $database = new \Illuminate\Database\Capsule\Manager();
             $database->addConnection($aConnection);
-            $database->setEventDispatcher(new Dispatcher(new Container));
+            $database->setEventDispatcher(new Dispatcher(new Container()));
             $database->setAsGlobal();
             $database->bootEloquent();
         }
@@ -145,7 +145,7 @@
             /** If has not found the controller and method */
             if ($has404)
             {
-                $view404 = new Parvus\View();
+                $view404 = new \Parvus\View();
 
                 print($view404->render($this->aApp['error']['404']));
             }
