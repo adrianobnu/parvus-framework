@@ -22,9 +22,6 @@
         {
             $this->request = Request::createFromGlobals();
 
-            /** Defines the base URL **/
-            define ('url',$this->request->getUri());
-
             /** Include the app constant */
             include_once (path.'app/config/Constant.php');
 
