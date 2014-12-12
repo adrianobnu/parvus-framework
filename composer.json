@@ -9,11 +9,16 @@
         "philo/laravel-blade": "2.*",
         "illuminate/database": "*",
         "phpmailer/phpmailer": "*",
-        "symfony/http-foundation" : "2.5.*"
+        "symfony/http-foundation" : "2.5.*",
+        "symfony/console": "2.4.x-dev"
     },
     "autoload": {
+        "psr-0": {
+            "": "src/"
+        },
         "psr-4": {
-	    "Parvus\\": "src"
+	        "Parvus\\": "src/",
+            "Parvus\\Console": "src/Console"
         }
     },
     "config": {
