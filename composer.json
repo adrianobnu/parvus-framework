@@ -21,8 +21,8 @@
             "Parvus\\Console": "src/Console"
         }
     },
+    "minimum-stability": "stable",
     "config": {
         "preferred-install": "dist"
-    },
-    "minimum-stability": "stable"
+    }
 }
