@@ -10,7 +10,7 @@
         "illuminate/database": "*",
         "phpmailer/phpmailer": "*",
         "symfony/http-foundation" : "2.5.*",
-        "symfony/console": "2.4.x-dev"
+        "symfony/console": "*"
     },
     "autoload": {
         "psr-0": {
