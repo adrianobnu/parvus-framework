@@ -18,7 +18,7 @@
         },
         "psr-4": {
 	        "Parvus\\": "src/",
-            "Parvus\\Console": "src/Console"
+            "Parvus\\Console\\": "src/Console"
         }
     },
     "minimum-stability": "stable",
