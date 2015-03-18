@@ -17,8 +17,6 @@
             $this->mailer->isSMTP();
             $this->mailer->isHTML(true);
 
-            $this->mailer->SMTPDebug = 1;
-
             /** Config the connection with the server */
             $this->mailer->SMTPAuth     = true;
             $this->mailer->Host         = $this->aConfig['host'];
