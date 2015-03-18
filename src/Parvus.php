@@ -88,6 +88,9 @@
                 }
             }
 
+            /** Save the connection info */
+            $_SERVER['Parvus']['Connection'] = $aConnection;
+
             /** Connection */
             $database = new \Illuminate\Database\Capsule\Manager();
             $database->addConnection($aConnection);
