@@ -70,6 +70,11 @@
          */
         public final function address ($prMail)
         {
+            if (environment == 'local')
+            {
+                $prMail = $this->aConfig['mail'];
+            }
+            
             $this->mailer->addAddress($prMail);
         }
 
@@ -104,17 +109,11 @@
                 'html'    => $this->html
             ));
 
-            /** If is local, return true */
-            if (environment == 'local')
-            {
-                return true;
-            }
-
             if ($this->mailer->send())
             {
                 return true;
             } else {
-                trigger_error('Mailer error: '.$this->mailer->ErrorInfo,E_ERROR);
+                throw new \RuntimeException('Mailer error: '.$this->mailer->ErrorInfo,E_ERROR);
             }
         }
     }
