@@ -70,11 +70,6 @@
          */
         public final function address ($prMail)
         {
-            if (environment == 'local')
-            {
-                $prMail = $this->aConfig['mail'];
-            }
-
             $this->mailer->addAddress($prMail);
         }
 
@@ -108,6 +103,17 @@
                 'subject' => $this->mailer->Subject,
                 'html'    => $this->html
             ));
+
+            /** If local, print the mail */
+            if (environment == 'local')
+            {
+                
+                print('<pre>');
+                    print_r($this->mailer);
+                print('</pre>');
+
+                return true;
+            }
 
             if ($this->mailer->send())
             {
