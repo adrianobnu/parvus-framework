@@ -5,7 +5,7 @@
 
     namespace Parvus;
 
-    ini_set('display_errors',0);
+    ini_set('display_errors',false);
     error_reporting(0);
 
     use Illuminate\Container\Container;
@@ -20,7 +20,16 @@
 
         public final function __construct()
         {
+            /** Init Whoops */
+            $whoops = new \Whoops\Run;
+            $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+            $whoops->register();
+
+            /** Init Request */
             $this->request = Request::createFromGlobals();
+
+            /** Define the base URL */
+            define ('url','http://'.$_SERVER['SERVER_NAME'].$this->request->getBaseUrl().DIRECTORY_SEPARATOR);
 
             /** Include the app constant */
             include_once (path.'app/config/Constant.php');
