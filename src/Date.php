@@ -11,7 +11,7 @@
 
         public static final function save ($prDate)
         {
-            return $prDate ? date ('Y-m-d'.(strpos($prDate,':') !== false ? ' H:i:s' : NULL),strToTime($prDate)) : NULL;
+            return $prDate ? date ('Y-m-d'.(strpos($prDate,':') !== false ? ' H:i:s' : NULL),strToTime(str_replace('/','-',$prDate))) : NULL;
         }
 
         public static final function diff ($prDate,$prDateFinal = NULL,$prFormat = '%Y')
