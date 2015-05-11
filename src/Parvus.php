@@ -113,6 +113,10 @@
          */
         private final function controller ()
         {
+			$namespace 	= NULL;
+			$controller = NULL;
+			$method 	= NULL;
+
             /** Get the actual URL, first item is the controller, and the second the method */
             if ($this->request->getPathInfo() != '/')
             {
@@ -121,6 +125,9 @@
                 /** Get the method and controller, at the last 2 positions of URL */
                 $method     = array_pop($aTmp);
                 $controller = array_pop($aTmp);
+
+				/** Get namespace from the first position */
+				$namespace  = array_pop($aTmp);
             }
             else /** If not has controller and method, load the default from config */
             {
@@ -130,7 +137,13 @@
                 $method     = $aConfig['default']['method'];
             }
 
-            $controller = 'Controller\\'.ucFirst($controller);
+			/** If namespace is null, set the default */
+			if ($namespace == NULL)
+			{
+				$namespace = 'Controller';
+			}
+
+            $controller = $namespace.'\\'.ucFirst($controller);
             $method 	= 'action'.($_SERVER['REQUEST_METHOD'] == 'POST' ? 'Post' : 'Get').ucfirst($method);
 
             $has404 = false;
@@ -162,7 +175,7 @@
     /** Autoload class */
     spl_autoload_register(function($prName)
     {
-        $aDirectory = array('app/controller/','app/model/', 'parvus-framework/lib/');
+        $aDirectory = array('app/controller/','app/model/');
 
         /** Load the config from app */
         $aArray = include (path.'app/config/App.php');
