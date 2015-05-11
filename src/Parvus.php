@@ -128,6 +128,13 @@
 
 				/** Get namespace from the first position */
 				$namespace  = array_pop($aTmp);
+
+				/** If namespace and controller is null, but have method, call index method */
+				if ($namespace == NULL && $controller == NULL && $method != NULL)
+				{
+					$controller = $method;
+					$method 	= 'index';
+				}
             }
             else /** If not has controller and method, load the default from config */
             {
