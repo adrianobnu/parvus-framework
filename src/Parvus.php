@@ -38,7 +38,6 @@
             $this->aApp = include (path.'app/config/App.php');
 
             /** Init the session */
-            session_name(__DIR__);
             session_start();
 
             $this->environment();
