@@ -10,7 +10,6 @@
         "illuminate/database": "*",
         "phpmailer/phpmailer": "*",
         "symfony/http-foundation" : "2.5.*",
-        "symfony/console": "*",
         "filp/whoops": "~1.1"
     },
     "autoload": {
@@ -18,8 +17,7 @@
             "": "src/"
         },
         "psr-4": {
-	        "Parvus\\": "src/",
-            "Parvus\\Console\\": "src/Console"
+	        "Parvus\\": "src/"
         }
     },
     "minimum-stability": "stable",
