@@ -42,7 +42,6 @@
 
             $this->environment();
             $this->database();
-            $this->controller();
         }
 
         /**
@@ -110,7 +109,7 @@
         /**
          * Init the controller
          */
-        private final function controller ()
+        public final function controller ()
         {
 			$namespace 	= NULL;
 			$controller = NULL;

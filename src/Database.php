@@ -1,8 +1,8 @@
 <?php
-    namespace Parvus;
+	namespace Parvus;
 
-    class Database
-    {
+	class Database
+	{
 
 		private $args;
 
@@ -23,7 +23,7 @@
 		private function help()
 		{
 
-			echo "Utilização: php database migration\n";
+			echo "Help: php ".$this->args[0]." migration\n";
 
 		}
 
@@ -39,10 +39,11 @@
 			}
 			else
 			{
+
 				switch ($this->args[1])
 				{
 
-					case "migrate" :
+					case "migration" :
 					{
 						$this->migration();
 
@@ -72,7 +73,7 @@
 			foreach ($aFile as $file)
 			{
 
-				include_once($file);
+				include($file);
 
 				$class = basename($file, '.php');
 
@@ -84,7 +85,6 @@
 					if (method_exists($migration,'run'))
 					{
 
-
 						$migration->run();
 
 					}
@@ -95,4 +95,4 @@
 
 		}
 
-    }
+	}
