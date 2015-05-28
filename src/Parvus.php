@@ -49,6 +49,13 @@
          */
         private final function environment ()
         {
+
+			/** When the server name is null and not have ssh_cliente, is local */
+			if ($_SERVER['SERVER_NAME'] == NULL && $_SERVER['SSH_CLIENT'] == NULL)
+			{
+				$_SERVER['SERVER_NAME'] = 'localhost';
+			}
+
             $aConfig = include(path.'app/config/Environment.php');
 
             foreach ($aConfig as $environment => $aValue)
