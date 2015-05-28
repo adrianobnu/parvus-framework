@@ -18,7 +18,7 @@
         private $aApp = array();
         private $request;
 
-        public final function __construct()
+        public function __construct()
         {
             /** Init Whoops */
             $whoops = new \Whoops\Run;

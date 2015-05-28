@@ -1,7 +1,7 @@
 <?php
 	namespace Parvus;
 
-	class Database
+	class Database extends Parvus
 	{
 
 		private $args;
@@ -12,6 +12,7 @@
 		 */
 		public function __construct($args)
 		{
+			parent::__construct();
 
 			$this->args = $args;
 
