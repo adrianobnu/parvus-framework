@@ -11,7 +11,12 @@
         
         public final static function file ($prName)
 		{
-			return $_FILES[$prName];
+
+			$aFile = $_FILES[$prName];
+
+			$aFile['extension'] = strToLower(pathinfo($aFile['name'], PATHINFO_EXTENSION));
+
+			return $aFile;
 		}
 
     }
