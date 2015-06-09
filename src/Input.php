@@ -23,10 +23,10 @@
 			 * Convert the size
 			 */
 			$aFile['size'] = array (
-				'byte'	   => number_format($aFile['size'], 2),
-				'kilobyte' => number_format($aFile['size'] / 1024, 2),
-				'megabyte' => number_format($aFile['size'] / 1048576, 2),
-				'gigabyte' => number_format($aFile['size'] / 1073741824, 2)
+				'byte'	   => number_format($aFile['size'], 2,'.',''),
+				'kilobyte' => number_format($aFile['size'] / 1024, 2,'.',''),
+				'megabyte' => number_format($aFile['size'] / 1048576, 2,'.',''),
+				'gigabyte' => number_format($aFile['size'] / 1073741824, 2,'.','')
 			);
 
 			return $aFile;
