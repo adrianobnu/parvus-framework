@@ -156,7 +156,7 @@
 			}
 
             $controller = $namespace.'\\'.ucFirst($controller);
-            $method 	= 'action'.($_SERVER['REQUEST_METHOD'] == 'POST' ? 'Post' : 'Get').ucfirst($method);
+            $method 	= 'action'.($_SERVER['REQUEST_METHOD'] == 'POST' ? 'Post' : 'Get').String::camelCase($method,true);
 
             $has404 = false;
 
