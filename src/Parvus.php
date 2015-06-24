@@ -29,7 +29,7 @@
             $this->request = Request::createFromGlobals();
 
             /** Define the base URL */
-            define ('url','http://'.$_SERVER['SERVER_NAME'].$this->request->getBaseUrl().DIRECTORY_SEPARATOR);
+            define ('url','http://'.$_SERVER['SERVER_NAME'].$this->request->getBaseUrl().'/');
 
             /** Include the app constant */
             include_once (path.'app/config/Constant.php');
