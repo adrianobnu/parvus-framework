@@ -16,5 +16,13 @@
 			header('location: '.$url);
 			exit;
 		}
+		
+		public final static function back ()
+		{
+			
+			header('location: '.$_SERVER['HTTP_REFERER']);
+			exit;
+			
+		}
 
 	}
