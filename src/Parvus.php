@@ -6,7 +6,7 @@
     namespace Parvus;
 
     ini_set('display_errors',true);
-    error_reporting(E_ERROR | E_COMPILE_ERROR | E_CORE_ERROR | E_RECOVERABLE_ERROR);
+    error_reporting(E_USER_ERROR | E_ERROR | E_COMPILE_ERROR | E_CORE_ERROR | E_RECOVERABLE_ERROR);
 
     use Illuminate\Container\Container;
     use Illuminate\Events\Dispatcher;
