@@ -4,6 +4,7 @@
     class Mail
     {
         private $mailer, $aConfig, $html;
+        private $withLog = false;
 
         public final function __construct()
         {
@@ -92,6 +93,16 @@
         }
 
         /**
+         * Define show log, not sending the mail
+         */
+        public final function withLog ()
+        {
+            
+            $this->withLog = true;
+            
+        }
+
+        /**
          * Sent the mail
          */
         public final function sent ()
@@ -104,14 +115,20 @@
                 'html'    => $this->html
             ));
 
-            /** If local, print the mail */
-            if (environment == 'local')
+            /** If has logging */
+            if ($this->withLog)
             {
                 
                 print('<pre>');
                     print_r($this->mailer);
                 print('</pre>');
 
+                return true;
+            }
+
+            /** If has local, return true **/
+            if (environment == 'local')
+            {
                 return true;
             }
 
