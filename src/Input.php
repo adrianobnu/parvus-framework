@@ -73,7 +73,7 @@
 
             }
 
-			return sizeOf($aItem) > 0 ? $aItem : $aItem[0];
+			return sizeOf($aItem) > 1 ? $aItem : $aItem[0];
 		}
 
 	}
