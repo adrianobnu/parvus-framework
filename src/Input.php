@@ -12,28 +12,75 @@
 		public final static function file ($prName)
 		{
 
-			$aFile = $_FILES[$prName];
+            $isMultiple = sizeOf($_FILES[$prName]['name']) > 1 ? true : false;
+            $aItem      = array();
 
-			/**
-			 * Get the extension of the file
-			 */
-			$aFile['extension'] = strToLower(pathinfo($aFile['name'], PATHINFO_EXTENSION));
+            if ($isMultiple)
+            {
 
-			/**
-			 * Convert the size
-			 */
-			$size = $aFile['size'];
+                foreach (range(0,sizeOf($_FILES[$prName]['name']) - 1) as $x)
+                {
 
-			unset ($aFile['size']);
+                    foreach (array('name','type','tmp_name','error','size') as $label)
+                    {
 
-			$aFile['size'] = array (
-				'byte'	   => number_format($size, 2,'.',''),
-				'kilobyte' => number_format($size / 1024, 2,'.',''),
-				'megabyte' => number_format($size / 1048576, 2,'.',''),
-				'gigabyte' => number_format($size / 1073741824, 2,'.','')
-			);
+                        $aItem[$x][$label] = $_FILES[$prName][$label][$x];
 
-			return $aFile;
+                    }
+
+                }
+
+            }
+            else
+            {
+
+                $aItem[0] = $_FILES[$prName];
+
+            }
+
+            foreach ($aItem as $x => $aInfo)
+            {
+
+                /**
+                 * Get the extension of the file
+                 */
+                $aItem[$x]['extension'] = strToLower(pathinfo($aInfo['name'], PATHINFO_EXTENSION));
+
+                /**
+                 * Convert the size
+                 */
+                $size = $aInfo['size'];
+
+                $aItem[$x]['size'] = array (
+                    'byte'	   => number_format($size, 2,'.',''),
+                    'kilobyte' => number_format($size / 1024, 2,'.',''),
+                    'megabyte' => number_format($size / 1048576, 2,'.',''),
+                    'gigabyte' => number_format($size / 1073741824, 2,'.','')
+                );
+
+                /** Se for uma imagem */
+                if (exif_imagetype($aInfo['tmp_name']) !== false)
+                {
+
+                    /** Recuper as dimensções */
+                    $aSize = getimagesize ($aInfo['tmp_name']);
+
+                    if ($aSize)
+                    {
+
+                        /** Incrementa o array com as dimensões */
+                        $aItem[$x]['dimension'] = array (
+                            'width'     => $aSize[0],
+                            'height'    => $aSize[1]
+                        );
+
+                    }
+
+                }
+
+            }
+
+			return $isMultiple ? $aItem : $aItem[0];
 		}
 
 	}
