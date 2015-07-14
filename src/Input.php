@@ -12,29 +12,17 @@
 		public final static function file ($prName)
 		{
 
-            $isMultiple = sizeOf($_FILES[$prName]['name']) > 1 ? true : false;
-            $aItem      = array();
+            $aItem = array();
 
-            if ($isMultiple)
+            foreach (range(0,sizeOf($_FILES[$prName]['name']) - 1) as $x)
             {
 
-                foreach (range(0,sizeOf($_FILES[$prName]['name']) - 1) as $x)
+                foreach (array('name','type','tmp_name','error','size') as $label)
                 {
 
-                    foreach (array('name','type','tmp_name','error','size') as $label)
-                    {
-
-                        $aItem[$x][$label] = $_FILES[$prName][$label][$x];
-
-                    }
+                    $aItem[$x][$label] = $_FILES[$prName][$label][$x];
 
                 }
-
-            }
-            else
-            {
-
-                $aItem[0] = $_FILES[$prName];
 
             }
 
@@ -80,7 +68,7 @@
 
             }
 
-			return $isMultiple ? $aItem : $aItem[0];
+			return sizeOf($aItem) > 0 ? $aItem : $aItem[0];
 		}
 
 	}
