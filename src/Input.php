@@ -19,15 +19,26 @@
 
             $aItem = array();
 
-            foreach (range(0,sizeOf($_FILES[$prName]['name']) - 1) as $x)
+            if (sizeOf($_FILES[$prName]['name']) > 1)
             {
 
-                foreach (array('name','type','tmp_name','error','size') as $label)
+                foreach (range(0,sizeOf($_FILES[$prName]['name']) - 1) as $x)
                 {
 
-                    $aItem[$x][$label] = $_FILES[$prName][$label][$x];
+                    foreach (array('name','type','tmp_name','error','size') as $label)
+                    {
+
+                        $aItem[$x][$label] = $_FILES[$prName][$label][$x];
+
+                    }
 
                 }
+
+            }
+            else
+            {
+
+                $aItem[0] = $_FILES[$prName];
 
             }
 
