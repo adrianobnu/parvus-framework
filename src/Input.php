@@ -12,6 +12,11 @@
 		public final static function file ($prName)
 		{
 
+            if ($_FILES[$prName]['name'][0] == NULL)
+            {
+                return false;
+            }
+
             $aItem = array();
 
             foreach (range(0,sizeOf($_FILES[$prName]['name']) - 1) as $x)
