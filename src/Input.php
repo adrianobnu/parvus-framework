@@ -9,7 +9,7 @@
 			return $_REQUEST[$prName] ? $_REQUEST[$prName] : $prValue;
 		}
 
-		public final static function file ($prName)
+		public final static function file ($prName,$prMultiple = false)
 		{
 
             if ($_FILES[$prName]['name'][0] == NULL)
@@ -19,26 +19,15 @@
 
             $aItem = array();
 
-            if (sizeOf($_FILES[$prName]['name']) > 1)
+            foreach (range(0,sizeOf($_FILES[$prName]['name']) - 1) as $x)
             {
 
-                foreach (range(0,sizeOf($_FILES[$prName]['name']) - 1) as $x)
+                foreach (array('name','type','tmp_name','error','size') as $label)
                 {
 
-                    foreach (array('name','type','tmp_name','error','size') as $label)
-                    {
-
-                        $aItem[$x][$label] = $_FILES[$prName][$label][$x];
-
-                    }
+                    $aItem[$x][$label] = $_FILES[$prName][$label][$x];
 
                 }
-
-            }
-            else
-            {
-
-                $aItem[0] = $_FILES[$prName];
 
             }
 
@@ -84,7 +73,7 @@
 
             }
 
-			return sizeOf($aItem) > 1 ? $aItem : $aItem[0];
+			return sizeOf($aItem) > 1 || $prMultiple ? $aItem : $aItem[0];
 		}
 
 	}
