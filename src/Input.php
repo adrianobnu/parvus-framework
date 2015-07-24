@@ -25,7 +25,7 @@
                 foreach (array('name','type','tmp_name','error','size') as $label)
                 {
 
-                    $aItem[$x][$label] = $_FILES[$prName][$label][$x];
+                    $aItem[$x][$label] = is_array($_FILES[$prName][$label]) ? $_FILES[$prName][$label][$x] : $_FILES[$prName][$label];
 
                 }
 
