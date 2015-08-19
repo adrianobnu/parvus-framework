@@ -48,6 +48,16 @@
         }
 
         /**
+         * Add a attachment as string
+         * @param string $prFile
+         * @param null $prName
+         */
+        public final function attachmentString ($prFile,$prName = NULL)
+        {
+            $this->mailer->addStringAttachment($prFile,$prName);
+        }
+
+        /**
          * Add a BBC
          * @param $prEmail
          */
