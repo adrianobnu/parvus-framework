@@ -122,7 +122,7 @@
             /** Get the actual URL, first item is the controller, and the second the method */
             if ($this->request->getPathInfo() != '/')
             {
-                $aTmp = explode('/',$this->request->getPathInfo());
+                $aTmp = array_filter(explode('/',$this->request->getPathInfo()));
 
                 /** Get the method and controller, at the last 2 positions of URL */
                 $method     = array_pop($aTmp);
