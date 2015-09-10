@@ -38,6 +38,18 @@
         }
 
         /**
+         * Add a reply to
+         * @param $prMail
+         * @param $prName
+         */
+        public final function replyTo ($prMail, $prName = NULL)
+        {
+
+            $this->mailer->addReplyTo($prMail,$prName);
+
+        }
+
+        /**
          * Add a attachment
          * @param $prFile
          * @param null $prName
@@ -59,7 +71,7 @@
 
         /**
          * Add a BBC
-         * @param $prEmail
+         * @param $prMail
          */
         public final function bbc ($prMail)
         {
@@ -78,10 +90,11 @@
         /**
          * Add a mail address
          * @param $prMail
+         * @param $prName
          */
-        public final function address ($prMail)
+        public final function address ($prMail,$prName = NULL)
         {
-            $this->mailer->addAddress($prMail);
+            $this->mailer->addAddress($prMail,$prName);
         }
 
         /**
