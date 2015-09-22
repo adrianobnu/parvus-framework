@@ -31,9 +31,6 @@
             /** Define the base URL */
             define ('url','http://'.$_SERVER['SERVER_NAME'].$this->request->getBaseUrl().'/');
 
-            /** Include the app constant */
-            include_once (path.'app/config/Constant.php');
-
             /** Load the app configuration */
             $this->aApp = include (path.'app/config/App.php');
 
@@ -42,6 +39,9 @@
 
             $this->environment();
             $this->database();
+            
+            /** Include the app constant */
+            include_once (path.'app/config/Constant.php');
         }
 
         /**
