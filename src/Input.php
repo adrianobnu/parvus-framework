@@ -6,7 +6,7 @@
 
 		public final static function get ($prName,$prValue = NULL)
 		{
-			return $_REQUEST[$prName] ? $_REQUEST[$prName] : $prValue;
+			return $_REQUEST[$prName] != NULL ? $_REQUEST[$prName] : $prValue;
 		}
 
 		public final static function file ($prName,$prMultiple = false)
