@@ -6,11 +6,16 @@
 
         /**
          * Creates a directory
-         * @param $prDirectory
+         * @param string|array $prDirectory
          * @param int $prPermission
          */
         public final static function create ($prDirectory,$prPermission = 0775)
         {
+
+            if (!is_array ($prDirectory))
+            {
+                $prDirectory = array($prDirectory);
+            }
 
             foreach ($prDirectory as $directoryTMP)
             {
