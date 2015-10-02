@@ -9,7 +9,7 @@
          * @param $prFile
          * @param null $prName
          */
-        public function make ($prFile, $prName = NULL)
+        public final static function make ($prFile, $prName = NULL)
         {
 
             header('Content-Description: File Transfer');
