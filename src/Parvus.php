@@ -176,7 +176,9 @@
             {
                 $view404 = new \Parvus\View();
 
-                print($view404->render($this->aApp['error']['404']));
+				header('HTTP/1.0 404 Not Found');
+
+                exit($view404->render($this->aApp['error']['404']));
             }
         }
     }
