@@ -13,6 +13,9 @@
         "filp/whoops": "~1.1"
     },
     "autoload": {
+    	"files": [
+            "src/helper/Lang.php"
+        ],
         "psr-0": {
             "": "src/"
         },
