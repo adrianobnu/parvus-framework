@@ -49,6 +49,16 @@
                 $aArray = $aArray[$label];
 
             }
+            
+            /**
+             * If the text has not found, return the original text
+             */
+            if ($aArray == NULL || !is_string($aArray))
+            {
+
+                return 'Missing: '.$prText;
+
+            }
 
             /** Replace the macros strings by value */
             foreach ($prArray as $label => $value)
