@@ -49,7 +49,7 @@
                 $aArray = $aArray[$label];
 
             }
-            
+
             /**
              * If the text has not found, return the original text
              */
@@ -100,17 +100,7 @@
             if (static::$locale == NULL && $_SESSION['parvus-locale'] == NULL)
             {
 
-                $file = path.'app/config/Language.php';
-
-                /** If the config file not exist */
-                if (!file_exists($file))
-                {
-
-                    throw new \RuntimeException('Language configuration file not found.',E_ERROR);
-
-                }
-
-                static::$config = include_once ($file);
+                static::getConfig();
 
                 /** If the default locale not exist */
                 if (static::$config['default'] == NULL)
@@ -130,6 +120,26 @@
 
             /** Return the locale */
             return static::$locale;
+
+        }
+
+        /**
+         * Load the config
+         */
+        private final static function getConfig ()
+        {
+
+            $file = path.'app/config/Language.php';
+
+            /** If the config file not exist */
+            if (!file_exists($file))
+            {
+
+                throw new \RuntimeException('Language configuration file not found.',E_ERROR);
+
+            }
+
+            static::$config = include_once ($file);
 
         }
 
