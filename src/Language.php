@@ -63,6 +63,13 @@
             /** Replace the macros strings by value */
             foreach ($prArray as $label => $value)
             {
+                
+                if ($value == NULL || strlen($value) == 0)
+                {
+
+                    continue;
+                    
+                }
 
                 foreach (array(mb_strtolower($label),mb_strtoupper($label),$label) as $tmp)
                 {
