@@ -25,28 +25,61 @@
             if (static::$aLanguage == NULL)
             {
 
-                $file = path.'app/language/'.$locale.'.php';
+                static::getConfig();
 
-                /** If the locale file not exists */
-                if (!file_exists($file))
+                if (static::$config['database'] != NULL)
                 {
 
-                    throw new \RuntimeException('Locale translation file not found.',E_ERROR);
+                    $modelName = '\\Model\\'.static::$config['database']['model'];
+
+                    $model = new $modelName();
+
+                    foreach ($model->where(static::$config['database']['field']['language'],$locale)->first()->{static::$config['database']['function']} as $item)
+                    {
+
+                        $aArray[$item->{static::$config['database']['field']['id']}] = $item->{static::$config['database']['field']['label']};
+
+                    }
 
                 }
+                else
+                {
 
-                /** Get the content */
-                $aArray = include_once ($file);
+                    $file = path.'app/language/'.$locale.'.php';
+
+                    /** If the locale file not exists */
+                    if (!file_exists($file))
+                    {
+
+                        throw new \RuntimeException('Locale translation file not found.',E_ERROR);
+
+                    }
+
+                    /** Get the content */
+                    $aArray = include_once ($file);
+
+                }
 
                 /** Save the content to array of the class */
                 static::$aLanguage = $aArray;
             }
 
-            /** Get the text position */
-            foreach (explode('.',$prText) as $label)
+            if (static::$config['database'] != NULL)
             {
 
-                $aArray = $aArray[$label];
+                $aArray = $aArray[$prText];
+
+            }
+            else
+            {
+
+                /** Get the text position */
+                foreach (explode('.',$prText) as $label)
+                {
+
+                    $aArray = $aArray[$label];
+
+                }
 
             }
 
@@ -63,12 +96,12 @@
             /** Replace the macros strings by value */
             foreach ($prArray as $label => $value)
             {
-                
+
                 if ($value == NULL || strlen($value) == 0)
                 {
 
                     continue;
-                    
+
                 }
 
                 foreach (array(mb_strtolower($label),mb_strtoupper($label),$label) as $tmp)
