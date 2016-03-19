@@ -168,6 +168,13 @@
          */
         private final static function getConfig ()
         {
+            
+            if (static::$config != NULL)
+            {
+                
+                return true;
+                
+            }
 
             $file = path.'app/config/Language.php';
 
