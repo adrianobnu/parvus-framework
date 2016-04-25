@@ -28,8 +28,11 @@
             /** Init Request */
             $this->request = Request::createFromGlobals();
 
+			/** Verify the protocol **/
+			$protocol = ($_SERVER['HTTPS'] != NULL || $_SERVER['SERVER_PORT'] == 443) ? 'https' : 'http';
+
             /** Define the base URL */
-            define ('url','http://'.$_SERVER['SERVER_NAME'].$this->request->getBaseUrl().'/');
+            define ('url',$protocol.'://'.$_SERVER['SERVER_NAME'].$this->request->getBaseUrl().'/');
 
             /** Load the app configuration */
             $this->aApp = include (path.'app/config/App.php');
