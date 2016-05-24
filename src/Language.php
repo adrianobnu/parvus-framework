@@ -89,7 +89,7 @@
             if ($aArray == NULL || !is_string($aArray))
             {
 
-                return 'Missing: '.$prText;
+                return $prText;
 
             }
 
