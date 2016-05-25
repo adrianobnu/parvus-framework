@@ -4,6 +4,9 @@
 	class Redirect
 	{
 
+        /**
+         * @param null $prURL
+         */
 		public final static function to ($prURL = NULL)
 		{
 			$url = str_replace(DIRECTORY_SEPARATOR,'/',url.$prURL);
@@ -16,7 +19,10 @@
 			header('location: '.$url);
 			exit;
 		}
-		
+
+        /**
+         * 
+         */
 		public final static function back ()
 		{
 			

@@ -155,7 +155,7 @@
 				$namespace = 'Controller';
 			}
 
-            $controller = ucFirst(String::camelCase($namespace)).'\\'.ucFirst(String::camelCase($controller));
+            $controller = ucfirst(String::camelCase($namespace)).'\\'.ucfirst(String::camelCase($controller));
             $method 	= 'action'.($_SERVER['REQUEST_METHOD'] == 'POST' ? 'Post' : 'Get').String::camelCase($method,true);
 
             $has404 = false;

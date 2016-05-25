@@ -15,7 +15,9 @@
 
 			if( $prFirstUpper == true )
 			{
+
 				$prString[0] = strtoupper($prString[0]);
+
 			}
 
 			$function = create_function('$c', 'return strtoupper($c[1]);');

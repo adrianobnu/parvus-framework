@@ -46,13 +46,13 @@
 		private static final function addSub ($prDate, $prQuantity, $prType , $prFormat, $prAction)
 		{
 
-			$time		= strToTime($prDate != NULL ? $prDate : date('Y-m-d'));
+			$time		= strtotime($prDate != NULL ? $prDate : date('Y-m-d'));
 			$day 		= date('d',$time);
 			$month 		= date('m',$time);
 			$year 		= date('Y',$time);
-			$prAction 	= strToLower($prAction);
+			$prAction 	= mb_strtolower($prAction,'UTF-8');
 
-			switch (strToLower($prType))
+			switch (mb_strtolower($prType,'UTF-8'))
 			{
 
 				case 'd' :
@@ -79,21 +79,104 @@
 
 		}
 
+        /**
+         * Show a date
+         * @param $prDate
+         * @param string $prFormat
+         * @return bool|null|string
+         */
+        public final static function date ($prDate, $prFormat = 'd/m/Y')
+        {
+
+            return $prDate != NULL ? date ($prFormat,strtotime($prDate)) : NULL;
+
+        }
+
+        /**
+         * Show a time
+         * @param $prDate
+         * @param string $prFormat
+         * @return bool|null|string
+         */
+        public final static function time ($prDate, $prFormat = 'H:i')
+        {
+
+            return self::date($prDate,$prFormat);
+
+        }
+
+        /**
+         * Show a datetime
+         * @param $prDatetime
+         * @param string $prFormat
+         * @return bool|null|string
+         */
+        public final static function datetime ($prDatetime, $prFormat = 'd/m/Y H:i')
+        {
+
+            return self::date($prDatetime,$prFormat);
+
+        }
+
+        /**
+         * Show a date
+         * @deprecated Use DATE or TIME function
+         * @param $prDate
+         * @return bool|null|string
+         */
         public static final function show ($prDate)
         {
-            return $prDate ? date ('d/m/Y'.(strpos($prDate,':') !== false ? ' H:i:s' : NULL),strToTime($prDate)) : NULL;
+
+            trigger_error("Function SHOW is deprecated. Use DATE or TIME function.", E_USER_NOTICE);
+
+            $format = 'd/m/Y';
+
+            if (strpos($prDate, ':') !== false)
+            {
+
+                $format .= ' H:i';
+
+            }
+
+            return self::date($prDate,$format);
+
         }
 
+        /**
+         * Convert a date to american format
+         * @param $prDate
+         * @return bool|null|string
+         */
         public static final function save ($prDate)
         {
-            return $prDate ? date ('Y-m-d'.(strpos($prDate,':') !== false ? ' H:i:s' : NULL),strToTime(str_replace('/','-',$prDate))) : NULL;
+
+            $format = 'Y-m-d';
+
+            if (strpos($prDate, ':') !== false)
+            {
+
+                $format .= ' H:i:s';
+
+            }
+
+            return $prDate != NULL ? date ($format,strtotime(str_replace('/','-',$prDate))) : NULL;
+
         }
 
+        /**
+         * @param $prDate
+         * @param null $prDateFinal
+         * @param string $prFormat (http://php.net/manual/en/dateinterval.format.php)
+         * @return string
+         */
         public static final function diff ($prDate,$prDateFinal = NULL,$prFormat = '%Y')
         {
-            if (!$prDateFinal)
+
+            if ($prDateFinal == NULL)
             {
-                $prDateFinal = date('Y-m-d');
+
+                $prDateFinal = date('Y-m-d H:i:s');
+
             }
 
             $date = new \DateTime($prDate);

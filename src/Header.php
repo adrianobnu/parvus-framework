@@ -4,6 +4,9 @@
     class Header
     {
 
+        /**
+         * Header PDF file
+         */
         public static function pdf ()
         {
             header('Cache-Control: no-cache, must-revalidate');
@@ -11,6 +14,10 @@
             header('Content-type: application/pdf');
         }
 
+        /**
+         * Header a CSV file with name
+         * @param $prFileName
+         */
         public final static function CSV ($prFileName)
         {
 
@@ -27,13 +34,19 @@
             header('Content-Disposition: attachment; filename="'.$prFileName);
         }
 
-        public final static function JSON ($prJSON = NULL)
+        /**
+         * Header a JSON with array
+         * @param null $prArray
+         */
+        public final static function JSON ($prArray = NULL)
         {
             header('Content-Type: application/json');
 
-            if ($prJSON)
+            if (is_array($prArray))
             {
-                exit(json_encode($prJSON));
+
+                exit(json_encode($prArray));
+
             }
         }
 

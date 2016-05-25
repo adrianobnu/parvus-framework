@@ -29,7 +29,7 @@
             /** TLS ou SSL */
             if ($this->aConfig['SMTPSecure'])
             {
-                $this->mailer->SMTPSecure = strToLower($this->aConfig['SMTPSecure']);
+                $this->mailer->SMTPSecure = mb_strtolower($this->aConfig['SMTPSecure'],'UTF-8');
             }
 
             /** From */

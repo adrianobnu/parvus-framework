@@ -9,17 +9,24 @@
 			return $_REQUEST[$prName] != NULL ? $_REQUEST[$prName] : $prValue;
 		}
 
+        /**
+         * @param $prName
+         * @param bool $prMultiple
+         * @return array|bool|mixed
+         */
 		public final static function file ($prName,$prMultiple = false)
 		{
 
             if ($_FILES[$prName]['name'][0] == NULL)
             {
+
                 return false;
+
             }
 
             $aItem = array();
 
-            foreach (range(0,sizeOf($_FILES[$prName]['name']) - 1) as $x)
+            foreach (range(0,sizeof($_FILES[$prName]['name']) - 1) as $x)
             {
 
                 foreach (array('name','type','tmp_name','error','size') as $label)
@@ -37,7 +44,7 @@
                 /**
                  * Get the extension of the file
                  */
-                $aItem[$x]['extension'] = strToLower(pathinfo($aInfo['name'], PATHINFO_EXTENSION));
+                $aItem[$x]['extension'] = mb_strtolower(pathinfo($aInfo['name'], PATHINFO_EXTENSION),'UTF-8');
 
                 /**
                  * Convert the size
@@ -73,7 +80,7 @@
 
             }
 
-			return sizeOf($aItem) > 1 || $prMultiple ? $aItem : $aItem[0];
+			return sizeof($aItem) > 1 || $prMultiple ? $aItem : $aItem[0];
 		}
 
 	}
