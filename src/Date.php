@@ -185,4 +185,15 @@
             return $interval->format($prFormat);
         }
 
+		/**
+         * Return the actual datetime
+         * @return string
+         */
+		public static final function now ()
+		{
+			
+			return date('Y-m-d H:i:s');
+			
+		}
+
     }
