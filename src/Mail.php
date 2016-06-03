@@ -6,7 +6,11 @@
         private $mailer, $aConfig, $html;
         private $withLog = false;
 
-        public final function __construct()
+        /**
+         * Mail constructor.
+         * @param null $prAConfig
+         */
+        public final function __construct($prAConfig = NULL)
         {
             /** Read the config */
             $this->aConfig = include(path.'app/config/Mail.php');
@@ -17,24 +21,78 @@
             /** Define SMTP */
             $this->mailer->isSMTP();
             $this->mailer->isHTML(true);
+        }
 
-            /** Config the connection with the server */
-            $this->mailer->SMTPAuth     = true;
-            $this->mailer->Host         = $this->aConfig['host'];
-            $this->mailer->Password     = $this->aConfig['password'];
-            $this->mailer->Username     = $this->aConfig['user'];
-            $this->mailer->Port         = $this->aConfig['port'];
-            $this->mailer->CharSet      = 'UTF-8';
+        /**
+         * @param $prName
+         * @param $prMail
+         */
+        public final function setFrom ($prName,$prMail)
+        {
 
-            /** TLS ou SSL */
-            if ($this->aConfig['SMTPSecure'])
-            {
-                $this->mailer->SMTPSecure = mb_strtolower($this->aConfig['SMTPSecure'],'UTF-8');
-            }
+            $this->aConfig['from']['email'] = $prMail;
+            $this->aConfig['from']['name']  = $prName;
 
-            /** From */
-            $this->mailer->From     = $this->aConfig['from']['email'];
-            $this->mailer->FromName = $this->aConfig['from']['name'];
+        }
+
+        /**
+         * @param $prSMTPSecure
+         */
+        public final function setSMTPSecure ($prSMTPSecure)
+        {
+
+            $this->aConfig['SMTPSecure'] = $prSMTPSecure;
+
+        }
+
+        /**
+         * @param $prPort
+         */
+        public final function setPort ($prPort)
+        {
+
+            $this->aConfig['port'] = $prPort;
+
+        }
+
+        /**
+         * @param $prUser
+         */
+        public final function setUser ($prUser)
+        {
+
+            $this->aConfig['user'] = $prUser;
+
+        }
+
+        /**
+         * @param $prPassword
+         */
+        public final function setPassword ($prPassword)
+        {
+
+            $this->aConfig['password'] = $prPassword;
+
+        }
+
+        /**
+         * @param $prHost
+         */
+        public final function setHost ($prHost)
+        {
+
+            $this->aConfig['host'] = $prHost;
+
+        }
+
+        /**
+         * @param $prView
+         */
+        public final function setView ($prView)
+        {
+
+            $this->aConfig['view'] = $prView;
+
         }
 
         /**
@@ -130,6 +188,28 @@
          */
         public final function sent ()
         {
+
+            /** Config the connection with the server */
+            $this->mailer->SMTPAuth     = true;
+            $this->mailer->Host         = $this->aConfig['host'];
+            $this->mailer->Password     = $this->aConfig['password'];
+            $this->mailer->Username     = $this->aConfig['user'];
+            $this->mailer->Port         = $this->aConfig['port'];
+            $this->mailer->CharSet      = 'UTF-8';
+
+            /** TLS ou SSL */
+            if ($this->aConfig['SMTPSecure'] != NULL)
+            {
+
+                $this->mailer->SMTPSecure = mb_strtolower($this->aConfig['SMTPSecure'],'UTF-8');
+
+            }
+
+            /** From */
+            $this->mailer->From     = $this->aConfig['from']['email'];
+            $this->mailer->FromName = $this->aConfig['from']['name'];
+
+            /** Create a new view */
             $view = new \Parvus\View();
 
             /** Generate the HTML with Blade */
@@ -157,9 +237,17 @@
 
             if ($this->mailer->send())
             {
+
                 return true;
-            } else {
-                throw new \RuntimeException('Mailer error: '.$this->mailer->ErrorInfo,E_ERROR);
+
             }
+            else
+            {
+
+                throw new \RuntimeException('Mailer error: '.$this->mailer->ErrorInfo,E_ERROR);
+
+            }
+
         }
+
     }
