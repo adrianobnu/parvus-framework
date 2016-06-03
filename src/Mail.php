@@ -185,8 +185,11 @@
 
         /**
          * Sent the mail
+         * @param bool $prForceSend
+         * @return bool
+         * @throws \phpmailerException
          */
-        public final function sent ()
+        public final function sent ($prForceSend = false)
         {
 
             /** Config the connection with the server */
@@ -229,8 +232,8 @@
                 return true;
             }
 
-            /** If has local, return true **/
-            if (environment == 'local')
+            /** If is local and not force send **/
+            if (environment == 'local' && !$prForceSend)
             {
                 return true;
             }
