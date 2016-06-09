@@ -155,14 +155,14 @@
 				$namespace = 'Controller';
 			}
 
-            $controller = ucfirst(String::camelCase($namespace)).'\\'.ucfirst(String::camelCase($controller));
-            $method 	= 'action'.($_SERVER['REQUEST_METHOD'] == 'POST' ? 'Post' : 'Get').String::camelCase($method,true);
+            $namespaceController = ucfirst(String::camelCase($namespace)).'\\'.ucfirst(String::camelCase($controller));
+            $method 	         = 'action'.($_SERVER['REQUEST_METHOD'] == 'POST' ? 'Post' : 'Get').String::camelCase($method,true);
 
             $has404 = false;
 
-            if (class_exists($controller))
+            if (class_exists($namespaceController))
             {
-                $class = new $controller();
+                $class = new $namespaceController();
 
                 if (method_exists($class,$method))
                 {
@@ -172,6 +172,25 @@
                 }
             } else {
                 $has404 = true;
+            }
+
+            /** If has 404, and controller and method for error, call the function */
+            if ($has404 && $this->aApp['error']['controller'] != NULL && $this->aApp['error']['method'] != NULL)
+            {
+
+                $class404  = $this->aApp['error']['controller'];
+                $method404 = $this->aApp['error']['method'];
+
+                if (!class_exists($class404) || !method_exists($class404,$method404))
+                {
+
+                    trigger_error('404 Error Class Not Found',E_CORE_ERROR);
+
+                }
+
+                $classController = new $class404;
+                $has404 = $classController->$method404($namespace,$controller,$method);
+
             }
 
             /** If has not found the controller and method */
