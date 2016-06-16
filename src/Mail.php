@@ -87,11 +87,13 @@
 
         /**
          * @param $prView
+         * @param $prArray
          */
-        public final function setView ($prView)
+        public final function setView ($prView, $prArray = array())
         {
 
-            $this->aConfig['view'] = $prView;
+            $this->aConfig['view']       = $prView;
+            $this->aConfig['view-array'] = $prArray;
 
         }
 
@@ -178,9 +180,9 @@
          */
         public final function withLog ()
         {
-            
+
             $this->withLog = true;
-            
+
         }
 
         /**
@@ -215,18 +217,27 @@
             /** Create a new view */
             $view = new \Parvus\View();
 
+            /** If is not array */
+            if ($this->aConfig['view-array'] == NULL)
+            {
+
+                $this->aConfig['view-array'] = array();
+
+            }
+
+            /** Add default param */
+            $this->aConfig['view-array']['subject'] = $this->mailer->Subject;
+            $this->aConfig['view-array']['html']    = $this->html;
+
             /** Generate the HTML with Blade */
-            $this->mailer->Body = $view->render ($this->aConfig['view'],array (
-                'subject' => $this->mailer->Subject,
-                'html'    => $this->html
-            ));
+            $this->mailer->Body = $view->render ($this->aConfig['view'],$this->aConfig['view-array']);
 
             /** If has logging */
             if ($this->withLog)
             {
-                
+
                 print('<pre>');
-                    print_r($this->mailer);
+                print_r($this->mailer);
                 print('</pre>');
 
                 return true;
@@ -241,7 +252,7 @@
             if ($this->mailer->send())
             {
 
-				$this->mailer->clearAddresses();
+                $this->mailer->clearAddresses();
                 $this->mailer->clearAttachments();
                 $this->mailer->clearBCCs();
                 $this->mailer->clearCCs();
@@ -252,19 +263,19 @@
                 return true;
 
             }
-            
+
             return false;
 
         }
-        
+
         /**
          * Returns the error message
-     	**/
+         **/
         public final function getError ()
         {
-					
-			return $this->mailer->ErrorInfo;
-					
+
+            return $this->mailer->ErrorInfo;
+
         }
 
     }
