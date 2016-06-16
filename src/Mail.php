@@ -128,10 +128,10 @@
         }
 
         /**
-         * Add a BBC
+         * Add a BCC
          * @param $prMail
          */
-        public final function bbc ($prMail)
+        public final function bcc ($prMail)
         {
             $this->mailer->addBCC($prMail);
         }
@@ -240,6 +240,14 @@
 
             if ($this->mailer->send())
             {
+
+								$this->mailer->clearAddresses();
+                $this->mailer->clearAttachments();
+                $this->mailer->clearBCCs();
+                $this->mailer->clearCCs();
+                $this->mailer->clearCustomHeaders();
+                $this->mailer->clearReplyTos();
+                $this->mailer->clearAllRecipients();
 
                 return true;
 
