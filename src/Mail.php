@@ -241,7 +241,7 @@
             if ($this->mailer->send())
             {
 
-								$this->mailer->clearAddresses();
+				$this->mailer->clearAddresses();
                 $this->mailer->clearAttachments();
                 $this->mailer->clearBCCs();
                 $this->mailer->clearCCs();
@@ -252,13 +252,19 @@
                 return true;
 
             }
-            else
-            {
+            
+            return false;
 
-                throw new \RuntimeException('Mailer error: '.$this->mailer->ErrorInfo,E_ERROR);
-
-            }
-
+        }
+        
+        /**
+         * Returns the error message
+     	**/
+        public final function getError ()
+        {
+					
+			return $this->mailer->ErrorInfo;
+					
         }
 
     }
