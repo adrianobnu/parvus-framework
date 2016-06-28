@@ -23,6 +23,26 @@
             $this->mailer->isHTML(true);
         }
 
+				/**
+         * @return \PHPMailer
+         */
+        public final function getPHPMailer ()
+        {
+
+            return $this->mailer;
+
+        }
+
+        /**
+         * @param $prId
+         */
+        public final function setMessageId ($prId)
+        {
+
+            $this->mailer->MessageID = $prId;
+
+        }
+
         /**
          * @param $prName
          * @param $prMail
