@@ -14,7 +14,8 @@
     },
     "autoload": {
     	"files": [
-            "src/helper/Lang.php"
+            "src/helper/Lang.php",
+            "src/helper/Debug.php"
         ],
         "psr-0": {
             "": "src/"
