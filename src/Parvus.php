@@ -11,12 +11,13 @@
     use Illuminate\Container\Container;
     use Illuminate\Events\Dispatcher;
     use Symfony\Component\HttpFoundation\Request;
+    use \Symfony\Component\Routing;
 
     class Parvus
     {
         private $environment = 'production';
         private $aApp = array();
-        private $request;
+        private $request,$routes,$controller;
 
         public function __construct()
         {
@@ -27,6 +28,58 @@
 
             /** Init Request */
             $this->request = Request::createFromGlobals();
+
+            /** Load the app configuration */
+            $this->aApp = include (path.'app/config/App.php');
+
+            /** If have route files */
+            if (file_exists(path.'app/config/Route.php'))
+            {
+
+                /** Init route collection */
+                $this->routes = new Routing\RouteCollection();
+
+                /** Load routes */
+                foreach (include(path.'app/config/Route.php') as $id => $route)
+                {
+
+                    $this->routes->add($id,new Routing\Route($route[0],
+                        $route[1],
+                        $route[2]
+                    ));
+
+                }
+
+                /** Create the context */
+                $context = new Routing\RequestContext();
+                $context->fromRequest($this->request);
+
+                /** Create the matcher */
+                $matcher = new \Parvus\URLMatcher($this->routes, $context);
+
+                /** If has true, save the parameters */
+                if ($aParameter = $matcher->collection($this->request->getPathInfo()))
+                {
+
+                    foreach ($aParameter as $name => $value)
+                    {
+
+                        /** if dont have underline */
+                        if (mb_substr($name,0,1) != '_')
+                        {
+
+                            $_REQUEST[$name] =  $value;
+
+                        }
+
+                    }
+
+                    /** Save the controller */
+                    $this->controller = $aParameter['_controller'];
+
+                }
+
+            }
 
 			/** Verify the protocol **/
 			$protocol = ($_SERVER['HTTPS'] != NULL || $_SERVER['SERVER_PORT'] == 443) ? 'https' : 'http';
@@ -157,6 +210,17 @@
 
             $namespaceController = ucfirst(String::camelCase($namespace)).'\\'.ucfirst(String::camelCase($controller));
             $method 	         = 'action'.($_SERVER['REQUEST_METHOD'] == 'POST' ? 'Post' : 'Get').String::camelCase($method,true);
+
+            /** if have custom route controller */
+            if ($this->controller != NULL)
+            {
+
+                $aController = explode('::',$this->controller);
+
+                $namespaceController = array_shift($aController);
+                $method = array_pop($aController);
+
+            }
 
             $has404 = false;
 
