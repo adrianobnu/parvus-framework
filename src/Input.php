@@ -4,6 +4,20 @@
 	class Input
 	{
 
+        /**
+         * Get flash data
+         * @param $prName
+         * @param null $prValue
+         *
+         * @return null
+         */
+        public final static function flash ($prName,$prValue = NULL)
+        {
+
+            return $prValue != NULL ? $prValue : $_SESSION[PARVUS_FLASH_SESSION_NAME][$prName];
+
+        }
+
 		public final static function get ($prName,$prValue = NULL)
 		{
 			return $_REQUEST[$prName] != NULL ? $_REQUEST[$prName] : $prValue;

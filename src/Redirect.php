@@ -5,6 +5,20 @@
 	{
 
         /**
+         * @return mixed
+         */
+        public final static function withInput ()
+        {
+
+            unset ($_SESSION[PARVUS_FLASH_SESSION_NAME]);
+
+            $_SESSION[PARVUS_FLASH_SESSION_NAME] = $_POST;
+
+            return self::class;
+
+        }
+
+        /**
          * @param null $prURL
          */
 		public final static function to ($prURL = NULL)
