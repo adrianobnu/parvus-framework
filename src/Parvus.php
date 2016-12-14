@@ -144,25 +144,36 @@
             /** Load the default configuration */
             $aDefault = $aConfig['default'];
 
-            /** Get the connection config based into the environment and driver */
-            $aConnection = $aConfig[$this->environment][$driver];
-
             /** Add the driver to the connection configuration */
-            $aConnection['driver'] = $driver;
+            $aDefault['driver'] = $driver;
 
-            /** Each the connection attributes */
-            foreach (array('host','user','password','database','charset','collation') as $field)
+            /** Init the database manager */
+            $database = new \Illuminate\Database\Capsule\Manager();
+
+            /** Get the connections for the environment */
+            foreach ($aConfig[$this->environment] as $name => $config)
             {
-                /** If the connection field is null, use the default value */
-                if ($aConnection[$field] == NULL && $aDefault[$field] != NULL)
+
+                /** Each the connection attributes */
+                foreach (array('driver','host','user','password','database','charset','collation') as $field)
                 {
-                    $aConnection[$field] = $aDefault[$field];
+
+                    /** If the connection field is null, use the default value */
+                    if ($config[$field] == NULL && $aDefault[$field] != NULL)
+                    {
+
+                        $config[$field] = $aDefault[$field];
+
+                    }
+
                 }
+
+                /** Add a new connection */
+                $database->addConnection($config,$name == $driver ? 'default' : $name);
+
             }
 
-            /** Connection */
-            $database = new \Illuminate\Database\Capsule\Manager();
-            $database->addConnection($aConnection);
+            /** Finish the connection */
             $database->setEventDispatcher(new Dispatcher(new Container()));
             $database->setAsGlobal();
             $database->bootEloquent();
