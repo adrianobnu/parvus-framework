@@ -83,10 +83,7 @@
 
             }
 
-			/** Verify the protocol
-			$protocol = ($_SERVER['HTTPS'] != NULL || $_SERVER['SERVER_PORT'] == 443) ? 'https' : 'http'; **/
-
-            /** Define the base URL */
+			/** Define the base URL */
             define ('url',$this->request->getScheme().'://'.$_SERVER['SERVER_NAME'].$this->request->getBaseUrl().'/');
 
             /** Load the app configuration */
