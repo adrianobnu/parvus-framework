@@ -216,11 +216,20 @@
 
             /** Config the connection with the server */
             $this->mailer->SMTPAuth     = true;
-            $this->mailer->Host         = $this->aConfig['host'];
+            $this->mailer->Host         = gethostbyname($this->aConfig['host']);
             $this->mailer->Password     = $this->aConfig['password'];
             $this->mailer->Username     = $this->aConfig['user'];
             $this->mailer->Port         = $this->aConfig['port'];
             $this->mailer->CharSet      = 'UTF-8';
+
+            /** Disable SSL verification */
+            $this->mailer->SMTPOptions = array (
+                'ssl' => array (
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
 
             /** TLS ou SSL */
             if ($this->aConfig['SMTPSecure'] != NULL)
