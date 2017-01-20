@@ -7,7 +7,7 @@
     "require": {
         "php" : ">=5.3",
         "philo/laravel-blade": "3.*",
-        "illuminate/database": "*",
+        "illuminate/database": "4.*",
         "phpmailer/phpmailer": "*",
         "symfony/http-foundation" : "2.5.*",
         "filp/whoops": "~1.1",
