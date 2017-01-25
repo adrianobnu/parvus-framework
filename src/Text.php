@@ -1,7 +1,7 @@
 <?php
 	namespace Parvus;
 
-	class String
+	class Text
 	{
 
 		/**
@@ -16,7 +16,7 @@
 			if( $prFirstUpper == true )
 			{
 
-				$prString[0] = strtoupper($prString[0]);
+				$prString[0] = mb_strtoupper($prString[0],'UTF-8');
 
 			}
 

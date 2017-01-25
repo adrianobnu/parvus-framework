@@ -218,8 +218,8 @@
 				$namespace = 'Controller';
 			}
 
-            $namespaceController = ucfirst(String::camelCase($namespace)).'\\'.ucfirst(String::camelCase($controller));
-            $method 	         = 'action'.($_SERVER['REQUEST_METHOD'] == 'POST' ? 'Post' : 'Get').String::camelCase($method,true);
+            $namespaceController = ucfirst(Text::camelCase($namespace)).'\\'.ucfirst(Text::camelCase($controller));
+            $method 	         = 'action'.($_SERVER['REQUEST_METHOD'] == 'POST' ? 'Post' : 'Get').Text::camelCase($method,true);
 
             /** if have custom route controller */
             if ($this->controller != NULL)
