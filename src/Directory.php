@@ -43,4 +43,43 @@
 
         }
 
+        /**
+         * Copy a directory recursive
+         * @param $prOriginal
+         * @param $prNew
+         */
+        public final static function copy ($prOriginal,$prNew)
+        {
+
+            $directory = opendir($prOriginal);
+
+            @mkdir($prNew);
+
+            while(false !== ($file = readdir($directory)))
+            {
+
+                if (($file != '.') && ($file != '..'))
+                {
+
+                    if (is_dir($prOriginal.'/'.$file))
+                    {
+
+                        self::copy($prOriginal.'/'.$file,$prNew.'/'.$file);
+
+                    }
+                    else
+                    {
+
+                        copy($prOriginal.'/'.$file,$prNew.'/'.$file);
+
+                    }
+
+                }
+
+            }
+
+            closedir($directory);
+
+        }
+
 	}
