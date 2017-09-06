@@ -8,8 +8,6 @@
     ini_set('display_errors',true);
     error_reporting(E_USER_ERROR | E_ERROR | E_COMPILE_ERROR | E_CORE_ERROR | E_RECOVERABLE_ERROR);
 
-    define ('PARVUS_FLASH_SESSION_NAME','parvus-flash-session');
-
     use Illuminate\Container\Container;
     use Illuminate\Events\Dispatcher;
     use Symfony\Component\HttpFoundation\Request;
