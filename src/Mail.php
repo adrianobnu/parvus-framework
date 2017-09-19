@@ -1,6 +1,8 @@
 <?php
     namespace Parvus;
 
+    use PHPMailer\PHPMailer\PHPMailer;
+
     class Mail
     {
         private $mailer, $aConfig, $html;
@@ -16,7 +18,7 @@
             $this->aConfig = include(path.'app/config/Mail.php');
 
             /** New classe mailer */
-            $this->mailer = new \PHPMailer();
+            $this->mailer = new PHPMailer();
 
             /** Define SMTP */
             $this->mailer->isSMTP();
