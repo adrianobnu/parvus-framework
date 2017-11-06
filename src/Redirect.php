@@ -5,6 +5,17 @@
 	{
 
         /**
+         * @param $prURL
+         */
+	    public final static function external ($prURL)
+        {
+
+            header('location: '.$prURL);
+            exit;
+
+        }
+
+        /**
          * @param null $prURL
          */
 		public final static function to ($prURL = NULL)
