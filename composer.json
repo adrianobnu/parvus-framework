@@ -9,7 +9,7 @@
         "philo/laravel-blade": "2.*",
         "illuminate/database": "*",
         "phpmailer/phpmailer": "*",
-        "symfony/http-foundation" : "2.5.*",
+        "symfony/http-foundation" : "2.6.*",
         "filp/whoops": "^2.1",
         "symfony/routing" : "3.1.*"
     },
