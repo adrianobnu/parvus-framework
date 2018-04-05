@@ -17,7 +17,8 @@
     	"files": [
             "src/helper/Lang.php",
             "src/helper/Debug.php",
-            "src/helper/Text.php"
+            "src/helper/Text.php",
+			"src/helper/Number.php"
         ],
         "psr-0": {
             "": "src/"
