@@ -196,4 +196,47 @@
 			
 		}
 
+		/**
+         * Return the weeks of a month
+         * @param $prDate
+         * @return array
+         */
+        public final static function weeksOfMonth ($prDate)
+        {
+
+            $begin = new \DateTime('first day of ' . date('Y-m-d',strtotime($prDate)));
+            $end = new \DateTime('last day of ' . date('Y-m-d',strtotime($prDate)));
+            $interval = new \DateInterval('P1D');
+            $daterange = new \DatePeriod($begin, $interval, $end);
+
+            $aWeeks = [];
+            $week = 1;
+
+            foreach($daterange as $key => $date)
+            {
+
+                $dayOfWeek = $date->format('w');
+
+                if (in_array($dayOfWeek,[0,6]) || $key == 0)
+                {
+
+                    $aWeeks[$week][] = $date->format('j');
+
+                    if ($dayOfWeek == 6)
+                    {
+
+                        $week ++;
+
+                    }
+
+                }
+
+            }
+
+            $aWeeks[$week][] = $end->format('j');
+
+            return $aWeeks;
+
+        }
+		
     }
