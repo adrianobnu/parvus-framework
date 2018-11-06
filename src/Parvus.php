@@ -81,7 +81,10 @@
 
             }
 
-			/** Define the base URL */
+            /** Add the IP to trusted proxies */
+            Request::setTrustedProxies(array($this->request->server->get('REMOTE_ADDR')));
+
+            /** Define the base URL */
             define ('url',$this->request->getScheme().'://'.$_SERVER['SERVER_NAME'].$this->request->getBaseUrl().'/');
 
             /** Load the app configuration */
