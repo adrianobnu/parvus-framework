@@ -84,8 +84,17 @@
             /** Add the IP to trusted proxies */
             Request::setTrustedProxies(array($this->request->server->get('REMOTE_ADDR')));
 
+            /** Define the protocol */
+            $protocol = $this->request->getScheme();
+
+            /** Verify if is HTTPS */
+            if (mb_strtoupper($_SERVER['HTTP_X_FORWARDED_PROTO']) == 'HTTPS' || mb_strtoupper($_SERVER['HTTPS']) == 'ON' || strpos(mb_strtoupper($_SERVER['HTTP_CF_VISITOR']),'HTTPS') !== false)
+            {
+                $protocol = 'https';
+            }
+
             /** Define the base URL */
-            define ('url',$this->request->getScheme().'://'.$_SERVER['SERVER_NAME'].$this->request->getBaseUrl().'/');
+            define ('url',$protocol.'://'.$_SERVER['SERVER_NAME'].$this->request->getBaseUrl().'/');
 
             /** Load the app configuration */
             $this->aApp = include (path.'app/config/App.php');
