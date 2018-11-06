@@ -88,7 +88,7 @@
             $protocol = $this->request->getScheme();
 
             /** Verify if is HTTPS */
-            if (mb_strtoupper($_SERVER['HTTP_X_FORWARDED_PROTO']) == 'HTTPS' || mb_strtoupper($_SERVER['HTTPS']) == 'ON' || strpos(mb_strtoupper($_SERVER['HTTP_CF_VISITOR']),'HTTPS') !== false)
+            if (mb_strtoupper($_SERVER['HTTP_X_FORWARDED_PROTO']) == 'HTTPS' || mb_strtoupper($_SERVER['HTTPS']) == 'ON' || strpos(mb_strtoupper($_SERVER['HTTP_CF_VISITOR']),'HTTPS') !== false || $_SERVER['HTTP_X_FORWARDED_PORT'] == 443)
             {
                 $protocol = 'https';
             }
