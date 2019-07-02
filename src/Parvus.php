@@ -152,18 +152,20 @@
 
         /**
          * Tenta reeniciar o banco de dados
+         * @param null $name
          */
-        public final function runDatabase()
+        public final function runDatabase($name = NULL)
         {
 
-            $this->database();
+            $this->database($name);
 
         }
 
         /**
          * Init the connection with database
+         * @param null $prName
          */
-        private final function database ()
+        private final function database ($prName = NULL)
         {
 
             if(isset($this->environment))
@@ -202,7 +204,7 @@
                     }
 
                     /** Add a new connection */
-                    $database->addConnection($config,$name == $driver ? 'default' : $name);
+                    $database->addConnection($config,($name == $driver && $prName == NULL) ? 'default' : ($prName != NULL ? $prName : $name));
 
                 }
 
