@@ -110,6 +110,18 @@
         }
 
         /**
+         * @param $environment
+         */
+        public final function setEnvironment ($environment)
+        {
+
+            define ('environment',$environment);
+
+            $this->environment = $environment;
+
+        }
+
+        /**
          * Define the environment
          */
         private final function environment ()
@@ -139,51 +151,68 @@
         }
 
         /**
+         * Tenta reeniciar o banco de dados
+         */
+        public final function runDatabase()
+        {
+
+            $this->database();
+
+        }
+
+        /**
          * Init the connection with database
          */
         private final function database ()
         {
-            $aConfig = include_once (path.'app/config/Database.php');
 
-            /** Load the default driver */
-            $driver = $aConfig['driver'];
-
-            /** Load the default configuration */
-            $aDefault = $aConfig['default'];
-
-            /** Add the driver to the connection configuration */
-            $aDefault['driver'] = $driver;
-
-            /** Init the database manager */
-            $database = new \Illuminate\Database\Capsule\Manager();
-
-            /** Get the connections for the environment */
-            foreach ($aConfig[$this->environment] as $name => $config)
+            if(isset($this->environment))
             {
 
-                /** Each the connection attributes */
-                foreach (array('driver','host','user','password','database','charset','collation') as $field)
+                $aConfig = include_once (path.'app/config/Database.php');
+
+                /** Load the default driver */
+                $driver = $aConfig['driver'];
+
+                /** Load the default configuration */
+                $aDefault = $aConfig['default'];
+
+                /** Add the driver to the connection configuration */
+                $aDefault['driver'] = $driver;
+
+                /** Init the database manager */
+                $database = new \Illuminate\Database\Capsule\Manager();
+
+                /** Get the connections for the environment */
+                foreach ($aConfig[$this->environment] as $name => $config)
                 {
 
-                    /** If the connection field is null, use the default value */
-                    if ($config[$field] == NULL && $aDefault[$field] != NULL)
+                    /** Each the connection attributes */
+                    foreach (array('driver','host','user','password','database','charset','collation') as $field)
                     {
 
-                        $config[$field] = $aDefault[$field];
+                        /** If the connection field is null, use the default value */
+                        if ($config[$field] == NULL && $aDefault[$field] != NULL)
+                        {
+
+                            $config[$field] = $aDefault[$field];
+
+                        }
 
                     }
 
+                    /** Add a new connection */
+                    $database->addConnection($config,$name == $driver ? 'default' : $name);
+
                 }
 
-                /** Add a new connection */
-                $database->addConnection($config,$name == $driver ? 'default' : $name);
+                /** Finish the connection */
+                $database->setEventDispatcher(new Dispatcher(new Container()));
+                $database->setAsGlobal();
+                $database->bootEloquent();
 
             }
 
-            /** Finish the connection */
-            $database->setEventDispatcher(new Dispatcher(new Container()));
-            $database->setAsGlobal();
-            $database->bootEloquent();
         }
 
         /**
