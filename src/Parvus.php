@@ -19,7 +19,12 @@
         private $aApp = array();
         private $request,$routes,$controller;
 
-        public function __construct()
+        /**
+         * Parvus constructor.
+         * @param null $environment
+         * @param null $connection
+         */
+        public function __construct($environment = NULL,$connection = NULL)
         {
             /** Init Whoops */
             $whoops = new \Whoops\Run;
@@ -102,8 +107,16 @@
             /** Init the session */
             session_start();
 
-            $this->environment();
-            $this->database();
+            if ($environment != NULL)
+            {
+                $this->setEnvironment($environment);
+            }
+            else
+            {
+                $this->environment();
+            }
+
+            $this->database($connection);
             
             /** Include the app constant */
             include_once (path.'app/config/Constant.php');
@@ -148,17 +161,6 @@
 
             /** Add a constant */
             define ('environment',$this->environment);
-        }
-
-        /**
-         * Tenta reeniciar o banco de dados
-         * @param null $name
-         */
-        public final function runDatabase($name = NULL)
-        {
-
-            $this->database($name);
-
         }
 
         /**
