@@ -99,7 +99,14 @@
             }
 
             /** Define the base URL */
-            define ('url',$protocol.'://'.$_SERVER['SERVER_NAME'].$this->request->getBaseUrl().'/');
+			$URL = $this->request->getScheme().'://'.$_SERVER['SERVER_NAME'].$this->request->getBaseUrl();
+
+			if ($this->request->getPort() != 80)
+            {
+                $URL.= ':'.$this->request->getPort();
+            }
+
+            define ('url',$URL.'/');
 
             /** Load the app configuration */
             $this->aApp = include (path.'app/config/App.php');
