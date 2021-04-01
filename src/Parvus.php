@@ -5,13 +5,14 @@
 
     namespace Parvus;
 
-    ini_set('display_errors',true);
+    ini_set('display_errors',false);
     error_reporting(E_USER_ERROR | E_ERROR | E_COMPILE_ERROR | E_CORE_ERROR | E_RECOVERABLE_ERROR);
 
     use Illuminate\Container\Container;
     use Illuminate\Events\Dispatcher;
     use Symfony\Component\HttpFoundation\Request;
     use \Symfony\Component\Routing;
+	use Whoops\Handler\Handler;
 
     class Parvus
     {
@@ -25,12 +26,7 @@
          * @param null $connection
          */
         public function __construct($environment = NULL,$connection = NULL)
-        {
-            /** Init Whoops */
-            $whoops = new \Whoops\Run;
-            $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-            $whoops->register();
-
+        {            
             /** Init Request */
             $this->request = Request::createFromGlobals();
 
@@ -89,15 +85,6 @@
             /** Add the IP to trusted proxies */
             Request::setTrustedProxies(array($this->request->server->get('REMOTE_ADDR')));
 
-            /** Define the protocol */
-            $protocol = $this->request->getScheme();
-
-            /** Verify if is HTTPS */
-            if (mb_strtoupper($_SERVER['HTTP_X_FORWARDED_PROTO']) == 'HTTPS' || mb_strtoupper($_SERVER['HTTPS']) == 'ON' || strpos(mb_strtoupper($_SERVER['HTTP_CF_VISITOR']),'HTTPS') !== false || $_SERVER['HTTP_X_FORWARDED_PORT'] == 443)
-            {
-                $protocol = 'https';
-            }
-
             /** Define the base URL */
 			$URL = $this->request->getScheme().'://'.$_SERVER['SERVER_NAME'].$this->request->getBaseUrl();
 
@@ -122,6 +109,18 @@
             {
                 $this->environment();
             }
+			
+			/** Init Whoops */
+			$whoops = new \Whoops\Run;
+			if (environment !== 'production') {
+				$whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+			} else {
+				$whoops->pushHandler(function ($exception, $inspector, $run) {
+					echo 'ERROR';
+					return Handler::DONE;
+				});
+			}
+			$whoops->register();
 
             $this->database($connection);
             
