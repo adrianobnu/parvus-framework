@@ -20,7 +20,9 @@
 
 			}
 
-			$function = create_function('$c', 'return strtoupper($c[1]);');
+			$function = function ($c) {
+				return strtoupper($c[1]);
+			};
 
 			return preg_replace_callback('/_([a-z])/', $function, preg_replace_callback('/-([a-z])/', $function, $prString));
 
