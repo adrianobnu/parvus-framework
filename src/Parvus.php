@@ -152,6 +152,10 @@
 				$_SERVER['SERVER_NAME'] = 'localhost';
 			}
 
+			if ($_SERVER['HTTP_HOST'] != NULL) {
+	            $_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
+	        }
+
             $aConfig = include(path.'app/config/Environment.php');
 
             foreach ($aConfig as $environment => $aValue)
