@@ -12,7 +12,7 @@
         public final function render ($prView,$prArray = array())
         {            
 			if (!is_dir(path . 'vendor/.cache')) {
-	            mkdir(path . 'vendor/.cache', 0755, true);
+	            mkdir(path . 'vendor/.cache');
 	        }
 			
             $blade = new \Philo\Blade\Blade(path.'app/view', path.'vendor/.cache');
