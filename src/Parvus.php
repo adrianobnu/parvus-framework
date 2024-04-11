@@ -86,8 +86,8 @@
             Request::setTrustedProxies(array($this->request->server->get('REMOTE_ADDR')));
 
             /** Define the base URL */
-			$URL = $this->request->getScheme().'://'.$_SERVER['SERVER_NAME'].$this->request->getBaseUrl();
-
+			$URL = $this->request->getScheme() . '://' . (strlen($_SERVER['SERVER_NAME']) > 3 ? $_SERVER['SERVER_NAME'] : $_SERVER['HTTP_HOST']) . $this->request->getBaseUrl();
+			
 			if ($this->request->getPort() != 80)
             {
                 $URL.= ':'.$this->request->getPort();
