@@ -11,7 +11,7 @@
          */
         public final function render ($prView,$prArray = array())
         {            
-            $blade = new \Philo\Blade\Blade(path.'app/view', path.'cache');
+            $blade = new \Philo\Blade\Blade(path.'app/view', path.'vendor/.cache');
 
             return $blade->view()->make($prView,$prArray)->render();
         }
